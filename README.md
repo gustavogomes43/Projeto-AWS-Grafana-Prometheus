@@ -1,41 +1,73 @@
-# 📊 AWS Observability Stack: Prometheus & Grafana com Docker
+# 📊 AWS Cloud Observability: Monitoramento Estratégico com Prometheus & Grafana
 
 ![Status](https://img.shields.io/badge/Status-Concluído-success)
 ![AWS](https://img.shields.io/badge/AWS-EC2-orange)
 ![Docker](https://img.shields.io/badge/Docker-Containers-blue)
 
-## 🎯 Resumo do Projeto
-Implementação de uma camada de **Observabilidade** completa para monitorar instâncias EC2 na AWS. O projeto utiliza Docker Compose para orquestrar o **Prometheus** (coleta de métricas), **Node Exporter** (exportação de dados do hardware) e **Grafana** (dashboards dinâmicos).
+## 🎯 Por que este projeto existe?
+No cenário de computação em nuvem, "quem não mede, não gerencia". Este projeto nasceu da necessidade de transformar dados brutos de infraestrutura em **inteligência de negócio**. O objetivo foi criar uma stack de monitoramento de baixo custo e alta performance para garantir a disponibilidade e a saúde de aplicações rodando em instâncias AWS EC2.
 
-## 🚀 Validação e Stress Test
-Para garantir que o monitoramento estava preciso e em tempo real, executei um teste de carga (stress) diretamente no processador da instância EC2.
+---
 
-### 1️⃣ Gatilho de Carga (Stress Test)
+## 🏗️ Arquitetura do Projeto
+Abaixo, o fluxo de dados e a estrutura de containers orquestrada na AWS:
+
+```mermaid
+graph TD
+    subgraph AWS_Cloud [AWS Cloud - EC2 Instance]
+        direction TB
+        NE[Node Exporter <br/><i>Coletor de Métricas</i>]
+        PR[Prometheus <br/><i>Time-Series DB</i>]
+        GR[Grafana <br/><i>Dashboards</i>]
+        
+        NE -- "Expõe métricas (:9100)" --> PR
+        PR -- "Consulta dados" --> GR
+    end
+
+    User((Usuário/Admin)) -- "Acessa Dashboards (:3000)" --> GR
+    Stress[Container Stress] -- "Gera Carga de CPU" --> NE
+```
+
+---
+
+## 🚀 Validação Técnica e Stress Test
+Para provar a eficácia da ferramenta, realizei um **Stress Test** simulando uma carga pesada de processamento:
+
+### 1️⃣ O Gatilho (Stress via Container)
 ![Terminal Stress](screenshots/01_terminal_stress.png)
 > *Execução do container de stress via SSH para elevar o uso de recursos do sistema.*
 
-### 2️⃣ Monitoramento de CPU em Tempo Real
+### 2️⃣ A Resposta (Observabilidade em Ação)
 ![Dash CPU](screenshots/02_dashboard_cpu_spike.png)
-> *O Grafana capturando instantaneamente o pico de processamento (CPU atingindo 100%).*
-
-### 3️⃣ Métricas de Disco e I/O
-![Metricas Disco](screenshots/04_metricas_disco.png)
-> *Monitoramento detalhado de leitura/escrita e uso de armazenamento.*
-
-### 4️⃣ Tráfego de Rede
-![Trafego Rede](screenshots/05_trafego_rede.png)
-> *Análise de throughput de rede (Inbound/Outbound) da instância AWS.*
-
-### 5️⃣ Visão Geral da Infraestrutura
-![Visao Geral](screenshots/03_visao_geral.png)
-> *Painel consolidado mostrando a saúde geral, uptime e principais indicadores do servidor.*
-
-## 🛠️ Tecnologias Utilizadas
-* **AWS EC2**: Infraestrutura escalável na nuvem.
-* **Docker & Docker Compose**: Containerização e orquestração dos serviços.
-* **Prometheus**: Banco de dados de série temporal para coleta de métricas.
-* **Node Exporter**: Coletor de métricas de hardware e SO para sistemas *nix.
-* **Grafana**: Plataforma de análise e visualização de dados.
+> *O dashboard reagiu instantaneamente ao pico de CPU atingindo 100%.*
 
 ---
-**Desenvolvido por Gustavo - Cloud & DevOps Engineer.**
+
+## 🧠 Desafios e Soluções (Raciocínio Lógico)
+
+| Desafio | Solução e Raciocínio |
+| :--- | :--- |
+| **Persistência de dados** | O Prometheus perdia o histórico ao reiniciar. Implementei **Docker Volumes** para mapear os dados do container para o disco da EC2, garantindo durabilidade. |
+| **Segurança e Exposição** | Abrir portas públicas é arriscado. Configurei **Security Groups na AWS** para restringir o tráfego e usei redes internas do Docker para a comunicação entre serviços. |
+| **Monitoramento de Hardware** | O Prometheus não lê o hardware diretamente. Utilizei o **Node Exporter** como ponte, uma solução leve que não consome recursos excessivos da instância. |
+
+---
+
+## 💰 Benefícios e Redução de Custos (Business Value)
+* **Economia Direta:** Substituição de ferramentas pagas (Datadog/New Relic) por uma stack Open Source, eliminando custos de licenciamento.
+* **Right-sizing:** Com as métricas de uso real, a empresa pode reduzir o tamanho de instâncias subutilizadas na AWS, cortando custos operacionais.
+* **Proatividade:** Alertas visuais permitem agir antes que a indisponibilidade cause prejuízo financeiro.
+
+### Visualização de Infraestrutura (Rede e Disco)
+![Visao Geral](screenshots/03_visao_geral.png)
+
+---
+
+## 🛠️ Ferramentas Utilizadas e "Porquês"
+* **AWS EC2:** Flexibilidade e padrão de mercado para computação em nuvem.
+* **Docker & Compose:** Garante portabilidade e que o ambiente seja idêntico em qualquer região AWS.
+* **Prometheus:** Líder em monitoramento moderno com modelo de coleta eficiente.
+* **Grafana:** A melhor ferramenta do mercado para visualização e tomada de decisão executiva.
+
+---
+**Desenvolvido por Gustavo - Cloud & DevOps.**
