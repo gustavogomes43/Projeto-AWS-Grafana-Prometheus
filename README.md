@@ -63,7 +63,7 @@ Para provar a eficácia da ferramenta, realizei um **Stress Test** simulando uma
 
 ---
 
-## 🛠️ Ferramentas Utilizadas e "Porquês"
+## 🛠️ Ferramentas Utilizadas
 * **AWS EC2:** Flexibilidade e padrão de mercado para computação em nuvem.
 * **Docker & Compose:** Garante portabilidade e que o ambiente seja idêntico em qualquer região AWS.
 * **Prometheus:** Líder em monitoramento moderno com modelo de coleta eficiente.
