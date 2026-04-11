@@ -32,7 +32,7 @@ A arquitetura foi desenhada para ser leve, escalável e de rápida implementaç�
   └────────────────────────────────────────────┘
 ```
 
-## 🛠️ Ferramentas Utilizadas e "Porquês"
+## 🛠️ Ferramentas Utilizadas
 * **AWS EC2:** Escolhida pela flexibilidade e por ser o padrão de mercado para computação em nuvem.
 * **Docker & Docker Compose:** Utilizados para garantir que o ambiente de monitoramento seja idêntico em qualquer máquina, facilitando o deploy e a portabilidade.
 * **Prometheus:** A melhor opção para métricas de séries temporais devido ao seu modelo de *pull*, que é altamente eficiente.
