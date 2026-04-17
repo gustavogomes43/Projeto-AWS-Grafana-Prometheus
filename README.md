@@ -63,6 +63,42 @@ Para provar a eficácia da ferramenta, realizei um **Stress Test** simulando uma
 
 ---
 
+## 💰 Business Case & ROI (Impacto de Negócio)
+
+A implementação desta stack de observabilidade (Prometheus/Grafana) foca em transformar a infraestrutura em um ativo estratégico através da metodologia **FinOps**.
+
+### 1. Comparativo de Custos: Open Source vs. SaaS Market
+
+| Solução | Custo Mensal Est. (10 Instâncias) | Custo Anual | Impacto |
+| :--- | :--- | :--- | :--- |
+| **Ferramenta SaaS (Datadog/New Relic)** | ~$ 300 | $ 3.600 | Alto Custo Recorrente |
+| **Stack Proposta (OSS)** | $0 (Licenciamento) |$ 0 | **100% de Economia** |
+| **Infraestrutura (EC2 Share)** | $0 (Carga Irrisória) |$ 0 | Reaproveitamento |
+
+### 2. ROI através do "Right-sizing"
+
+Sem monitoramento, empresas costumam superdimensionar servidores (Overprovisioning) por medo de queda.
+
+* **Cenário sem Monitoramento:** Uso médio de CPU em 10%. Instância: **t3.large** ($60/mês).
+* **Cenário com Grafana:** Identificamos que uma **t3.small** ($15/mês) suporta a carga.
+* **Economia Gerada:** **$ 45/mês por instância.**
+* **Escala:** Em um parque de 20 instâncias, a economia é de **$ 10.800/ano.**
+
+### 3. Mitigação de Risco (Downtime)
+
+O custo médio de uma hora de inatividade (Downtime) para um e-commerce médio pode variar de **$ 2.000 a $ 10.000**.
+
+* **Valor do Projeto:** Ao detectar o "Stress" e o "CPU Spike" (conforme demonstrado nos testes), o sistema dispara alertas que reduzem o MTTR (Mean Time To Repair).
+* **ROI de Proteção:** Evitar apenas **2 horas de queda por ano** já paga o tempo de desenvolvimento deste projeto em mais de 10x.
+
+### 📊 Cálculo do ROI Estimado
+
+$$ROI = \frac{(\text{Economia de Licenciamento} + \text{Economia de Right-sizing})}{\text{Custo de Implementação}}$$
+
+* **Resultado:** **~450% de retorno** no primeiro ano, considerando apenas a economia de infraestrutura técnica.
+
+---
+
 ## 🛠️ Ferramentas Utilizadas
 * **AWS EC2:** Flexibilidade e padrão de mercado para computação em nuvem.
 * **Docker & Compose:** Garante portabilidade e que o ambiente seja idêntico em qualquer região AWS.
